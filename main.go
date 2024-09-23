@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	db.Connect()
+	db.Init()
 	defer db.DB.Close()
 
 	if err := cmd.RootCmd.Execute(); err != nil {
