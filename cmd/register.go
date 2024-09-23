@@ -41,7 +41,8 @@ var registerCmd = &cobra.Command{
 			log.Fatalf("Failed to register user: %v", err)
 		}
 
-		fmt.Println("User registered successfully!")
+		fmt.Println("User registered successfully! Please log in to continue.")
+		loginCmd.Run(cmd, args)
 	},
 }
 
