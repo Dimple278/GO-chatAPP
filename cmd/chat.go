@@ -1,28 +1,16 @@
 package cmd
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"os"
 	"os/signal"
-	"strings"
 	"syscall"
 
+	"github.com/dimple278/go-chat-app/utils"
 	socketio_client "github.com/hesh915/go-socket.io-client"
 	"github.com/spf13/cobra"
 )
-
-// Helper function for reading input from the user
-func readUserInput() string {
-	reader := bufio.NewReader(os.Stdin)
-	message, err := reader.ReadString('\n')
-	if err != nil {
-		log.Println("Error reading message:", err)
-		return ""
-	}
-	return strings.TrimSpace(message)
-}
 
 var chatCmd = &cobra.Command{
 	Use:   "chat",
@@ -55,7 +43,7 @@ var chatCmd = &cobra.Command{
 		// Goroutine to handle user input and send messages
 		go func() {
 			for {
-				message := readUserInput()
+				message := utils.ReadUserInput()
 				if message != "" {
 					client.Emit("chat message", message)
 				}

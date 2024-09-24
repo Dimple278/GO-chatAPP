@@ -62,17 +62,15 @@ func main() {
 				response := commands.ListUsersCommand()
 				s.Emit("chat message", response)
 			case strings.HasPrefix(msg, "/logout"):
-				// Handle logout command
-				userInfo, ok := s.Context().(map[string]interface{})
-				if ok {
-					username := userInfo["username"].(string)
+				// Handle logout command using the LogoutCommand function
+				username := commands.LogoutCommand(s)
+				if username != "User not found." {
 					// Broadcast the logout message before closing the connection
 					server.BroadcastToNamespace("/", "chat message", fmt.Sprintf("%s left the chat", username))
+				} else {
+					s.Emit("chat message", username)
 				}
-
-				// Remove the user from the active users and disconnect
-				// response := commands.LogoutCommand(s)
-				s.Close()
+				s.Close() // Close the connection after logout
 				return
 			case strings.HasPrefix(msg, "/history"):
 				// Handle history command
