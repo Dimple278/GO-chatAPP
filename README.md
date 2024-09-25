@@ -64,7 +64,7 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
    Create a `.env` file in the root directory with the following details:
 
    ```env
-   DATABASE_URL=postgres://chatuser:password@localhost:5432/chatapp
+   DATABASE_URL=postgres://<DB_USERNAME>:<DB_PASSWORD>@localhost:5432/<DB_NAME>
    ```
 
 ### Running Migrations
