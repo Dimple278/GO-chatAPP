@@ -53,25 +53,10 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
 
 3. **Set Up PostgreSQL**:
 
-   Create a PostgreSQL database and run the necessary migrations to set up the `users` and `chat_history` tables.
+   Create a PostgreSQL database:
 
    ```sql
    CREATE DATABASE chatapp;
-   \c chatapp;
-
-   CREATE TABLE users (
-       id SERIAL PRIMARY KEY,
-       email VARCHAR(255) UNIQUE NOT NULL,
-       username VARCHAR(255) UNIQUE NOT NULL,
-       password VARCHAR(255) NOT NULL
-   );
-
-   CREATE TABLE chat_history (
-       id SERIAL PRIMARY KEY,
-       user_id INT REFERENCES users(id),
-       message TEXT NOT NULL,
-       created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-   );
    ```
 
 4. **Update Configuration**:
@@ -82,7 +67,32 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
    DATABASE_URL=postgres://chatuser:password@localhost:5432/chatapp
    ```
 
-5. **Run the Application**:
+### Running Migrations
+
+Before starting the application, ensure the database schema is up to date by running migrations:
+
+1. **Install Migrate Tool**:
+
+   - Install `golang-migrate` by running:
+     ```bash
+     go get -u github.com/golang-migrate/migrate/v4
+     ```
+
+2. **Run Migrations**:
+
+   - To apply all pending migrations, use:
+     ```bash
+     migrate -path ./migrations -database ${DATABASE_URL} up
+     ```
+
+3. **Rollback Migrations**:
+
+   - If needed, you can rollback the last migration by running:
+     ```bash
+     migrate -path ./migrations -database ${DATABASE_URL} down
+     ```
+
+4. **Run the Application**:
 
    ```bash
    go run main.go
@@ -144,30 +154,6 @@ After logging in, users can use the following options prefixed by `/`:
   ```bash
   /logout
   ```
-
-## Database Schema
-
-### Users Table
-
-```sql
-CREATE TABLE users (
-    id SERIAL PRIMARY KEY,
-    email VARCHAR(255) UNIQUE NOT NULL,
-    username VARCHAR(255) UNIQUE NOT NULL,
-    password VARCHAR(255) NOT NULL
-);
-```
-
-### Chat History Table
-
-```sql
-CREATE TABLE chat_history (
-    id SERIAL PRIMARY KEY,
-    user_id INT REFERENCES users(id),
-    message TEXT NOT NULL,
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-```
 
 ## Additional Notes
 
