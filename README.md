@@ -53,7 +53,7 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
 
 3. **Set Up PostgreSQL**:
 
-   Create a PostgreSQL database and run the necessary migrations to set up the users and chat history tables.
+   Create a PostgreSQL database and run the necessary migrations to set up the `users` and `chat_history` tables.
 
    ```sql
    CREATE DATABASE chatapp;
@@ -66,7 +66,7 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
        password VARCHAR(255) NOT NULL
    );
 
-   CREATE TABLE messages (
+   CREATE TABLE chat_history (
        id SERIAL PRIMARY KEY,
        user_id INT REFERENCES users(id),
        message TEXT NOT NULL,
@@ -158,10 +158,10 @@ CREATE TABLE users (
 );
 ```
 
-### Messages Table
+### Chat History Table
 
 ```sql
-CREATE TABLE messages (
+CREATE TABLE chat_history (
     id SERIAL PRIMARY KEY,
     user_id INT REFERENCES users(id),
     message TEXT NOT NULL,
