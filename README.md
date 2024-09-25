@@ -39,8 +39,8 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
 1. **Clone the Repository**:
 
    ```bash
-   git clone https://github.com/Dimple278/GO-chatAPP
-   cd GO-chatApp
+   git clone https://github.com/your-repo/cli-chat-app.git
+   cd cli-chat-app
    ```
 
 2. **Install Dependencies**:
@@ -56,8 +56,8 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
    Create a PostgreSQL database and run the necessary migrations to set up the users and chat history tables.
 
    ```sql
-   CREATE DATABASE chat_app;
-   \c chat_app;
+   CREATE DATABASE chatapp;
+   \c chatapp;
 
    CREATE TABLE users (
        id SERIAL PRIMARY KEY,
@@ -78,12 +78,8 @@ This is a Command Line Interface (CLI) chat application built using Golang. It a
 
    Create a `.env` file in the root directory with the following details:
 
-   ```
-   DB_HOST=localhost
-   DB_PORT=5432
-   DB_USER=your_db_user
-   DB_PASSWORD=your_db_password
-   DB_NAME=chat_app
+   ```env
+   DATABASE_URL=postgres://chatuser:password@localhost:5432/chatapp
    ```
 
 5. **Run the Application**:
@@ -121,31 +117,33 @@ It will prompt you for:
 - Username
 - Password
 
-Once logged in, you can start sending chat messages.
+Once logged in, you can start chatting with all the other logged-in users.
 
-### `listusers`
+### `chat`
 
-View all currently logged-in users.
+After logging in, the user can start chatting with other logged-in users by entering messages directly. Commands can be used to interact with the chat server.
 
-```bash
-go run main.go listusers
-```
+### Chat Commands (Options)
 
-### `history`
+After logging in, users can use the following options prefixed by `/`:
 
-View the chat history.
+- **`/history`**: View your chat history.
 
-```bash
-go run main.go history
-```
+  ```bash
+  /history
+  ```
 
-### `logout`
+- **`/listusers`**: View all currently logged-in users.
 
-Log out the current user.
+  ```bash
+  /listusers
+  ```
 
-```bash
-go run main.go logout
-```
+- **`/logout`**: Log out the current user.
+
+  ```bash
+  /logout
+  ```
 
 ## Database Schema
 
@@ -177,11 +175,3 @@ CREATE TABLE messages (
 - Ensure the database is running before starting the application.
 - The chat messages are broadcasted in real time to all online users.
 - The `cobra` library is used to handle the CLI commands and their flags.
-
-## Contributing
-
-Feel free to submit issues or pull requests if you want to contribute to this project.
-
-## License
-
-This project is licensed under the MIT License.
